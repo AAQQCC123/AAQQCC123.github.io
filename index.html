@@ -2,54 +2,201 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>妹宝请学四级</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>妹宝今天爱我吗</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
+        :root {
+            --primary-color: #FF9BB4;
+            --secondary-color: #FFD1DC;
+            --accent-color: #FF6B8B;
+            --text-color: #5A3D4E;
+            --bg-color: #FFF5F7;
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Marker Felt', 'Arial Rounded MT Bold', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            touch-action: manipulation;
+            background-image: url('./images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 10px;
+        }
+        
+        .header {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
+            border: 2px solid var(--secondary-color);
         }
         
         h1 {
-            color: #ff6b9e;
-            font-size: 3em;
-            margin-bottom: 30px;
+            color: var(--accent-color);
+            font-size: 2em;
+            margin: 5px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            padding: 8px 15px;
+            border-radius: 15px;
+            display: inline-block;
         }
         
-        .game-container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
+        .tabs {
+            display: flex;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            margin: 0 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            border: 2px solid var(--secondary-color);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* 游戏区域样式 */
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            background-color: var(--secondary-color);
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+        }
+        
+        .timer, .score, .level {
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+            color: var(--text-color);
+        }
+        
+        .score {
+            color: var(--accent-color);
+        }
+        
+        .controls {
+            margin: 15px 0;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            border: 2px solid white;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            font-family: inherit;
+            font-weight: bold;
+            border: 2px solid white;
+            min-width: 100px;
+        }
+        
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #gameBoard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
         }
         
         .bubble {
-            display: inline-block;
-            width: 100px;
-            height: 100px;
-            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            text-align: center;
-            line-height: 100px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2),
-                        inset 5px 5px 10px rgba(255, 255, 255, 0.4),
-                        5px 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.2),
+                        inset 3px 3px 6px rgba(255, 255, 255, 0.4),
+                        3px 3px 8px rgba(0, 0, 0, 0.1);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
             word-break: break-word;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding: 5px;
+            padding: 8px;
             box-sizing: border-box;
+            position: relative;
+            border: 3px solid white;
+            text-align: center;
         }
         
         .bubble:hover {
@@ -59,8 +206,9 @@
         .bubble.selected {
             transform: scale(1.1);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
-                        inset -5px -5px 10px rgba(0, 0, 0, 0.2),
-                        inset 5px 5px 10px rgba(255, 255, 255, 0.4);
+                        inset -3px -3px 6px rgba(0, 0, 0, 0.2),
+                        inset 3px 3px 6px rgba(255, 255, 255, 0.4);
+            border: 3px solid var(--accent-color);
         }
         
         .bubble.matched {
@@ -69,186 +217,798 @@
             transform: scale(0);
         }
         
-        .controls {
-            margin: 30px 0;
-            padding: 20px;
-            background-color: #e9e9e9;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        button {
-            background-color: #ff8fab;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #ff6b9e;
-        }
-        
-        input, textarea {
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 200px;
-        }
-        
-        .word-form {
-            margin: 20px auto;
-            max-width: 500px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .word-form.hidden {
-            display: none;
-        }
-        
-        .timer {
-            font-size: 1.5em;
-            margin: 20px 0;
-            color: #555;
-        }
+        /* 泡泡颜色 */
+        .bubble-color-1 { background-color: #FF9AA2; }
+        .bubble-color-2 { background-color: #FFB7B2; }
+        .bubble-color-3 { background-color: #FFDAC1; }
+        .bubble-color-4 { background-color: #E2F0CB; }
+        .bubble-color-5 { background-color: #B5EAD7; }
+        .bubble-color-6 { background-color: #C7CEEA; }
+        .bubble-color-7 { background-color: #F8B195; }
+        .bubble-color-8 { background-color: #F67280; }
+        .bubble-color-9 { background-color: #C06C84; }
+        .bubble-color-10 { background-color: #6C5B7B; }
         
         .success-message {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(255, 107, 158, 0.9);
+            background-color: rgba(255, 107, 158, 0.95);
             color: white;
-            padding: 30px 50px;
-            border-radius: 10px;
-            font-size: 2em;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 25px 35px;
+            border-radius: 20px;
+            font-size: 1.5em;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
             z-index: 100;
             display: none;
+            animation: bounce 0.5s;
+            text-align: center;
+            width: 90%;
+            max-width: 300px;
+            border: 3px solid white;
         }
         
-        .word-list {
-            display: none;
-            margin: 20px auto;
-            max-width: 600px;
-            background-color: #e9e9e9;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translate(-50%, -50%) scale(1);}
+            40% {transform: translate(-50%, -50%) scale(1.1);}
+            60% {transform: translate(-50%, -50%) scale(1.05);}
+        }
+        
+        /* 猫咪区域样式 */
+        .cat-area {
+            text-align: center;
+        }
+        
+        .cat-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cat-container {
+            position: relative;
+            width: 220px;
+            height: 250px;
+            margin: 0 auto 15px;
+            background-color: #FFE6EE;
+            border-radius: 20px;
             padding: 15px;
-            border-radius: 10px;
-            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
         }
         
-        .word-list.visible {
-            display: block;
+        .cat-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
         
-        .word-item {
-            margin: 5px 0;
-            padding: 5px;
-            border-bottom: 1px solid #ccc;
+        .cat-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            transition: all 0.3s;
         }
         
-        .word-item button {
-            padding: 3px 8px;
-            font-size: 12px;
-            margin-left: 10px;
+        .cat-outfit {
+            position: absolute;
+            z-index: 3;
+            object-fit: contain;
+            transition: all 0.3s;
         }
-
-        /* 新增的音乐控制样式 */
-        .music-controls {
+        
+        #cat-hat {
+            width: 90px;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        #cat-scarf {
+            width: 120px;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        #cat-glasses {
+            width: 80px;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        #cat-bow {
+            width: 50px;
+            top: 40px;
+            right: 30px;
+        }
+        
+        .cat-talk {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            padding: 12px 18px;
+            border-radius: 18px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            max-width: 200px;
+            font-size: 15px;
+            display: none;
+            z-index: 10;
+            border: 2px solid var(--secondary-color);
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        .cat-talk::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+        }
+        
+        .cat-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .cat-controls button {
+            min-width: auto;
+            padding: 8px 15px;
+        }
+        
+        .cat-stats {
+            width: 100%;
+            margin: 15px 0;
+            background-color: var(--secondary-color);
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+        }
+        
+        .stat-bar {
+            height: 22px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-fill {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.5s;
+            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hunger .stat-fill {
+            background: linear-gradient(to right, #FF9BB4, #FF6B8B);
+        }
+        
+        .thirst .stat-fill {
+            background: linear-gradient(to right, #A2D7D8, #5CC2C5);
+        }
+        
+        .happiness .stat-fill {
+            background: linear-gradient(to right, #FFD3B5, #FFAA80);
+        }
+        
+        .stat-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            line-height: 22px;
+            font-size: 13px;
+            color: var(--text-color);
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 聊天对话框 */
+        .chat-container {
+            margin: 15px 0;
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+            display: none;
+        }
+        
+        .chat-messages {
+            height: 180px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(255,255,255,0.5);
+        }
+        
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .user-message {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .cat-message {
+            background-color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            border-radius: 18px;
+            padding: 10px 15px;
+            border: 2px solid var(--secondary-color);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .chat-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        /* 商店样式 */
+        .shop-container {
+            margin: 15px 0;
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+        }
+        
+        .shop-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.3em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .shop-tabs {
+            display: flex;
+            margin-bottom: 12px;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .shop-tab {
+            padding: 8px 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .shop-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        .shop-content {
+            display: none;
+        }
+        
+        .shop-content.active {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .shop-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .shop-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            background-color: white;
+        }
+        
+        .shop-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+        
+        .shop-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .shop-item-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        /* 音乐控制 */
+        .music-control {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            background-color: var(--primary-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
+            justify-content: center;
             align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border: 2px solid white;
+            transition: all 0.3s;
         }
-
-        .music-controls button {
-            padding: 8px 15px;
-            margin: 0 5px;
-            font-size: 14px;
+        
+        .music-control:hover {
+            transform: scale(1.1);
         }
-
-        #musicStatus {
-            margin-left: 10px;
-            font-size: 14px;
-            color: #555;
+        
+        .music-control i {
+            font-size: 22px;
+            color: white;
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 768px) {
+            body {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            
+            .bubble {
+                width: 110px;
+                height: 110px;
+                font-size: 16px;
+            }
+            
+            .shop-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .cat-container {
+                width: 250px;
+                height: 280px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>妹宝请学四级</h1>
-    
-    <div class="controls">
-        <button id="startBtn">开始游戏</button>
-        <button id="addWordBtn">添加单词</button>
-        <button id="editWordsBtn">编辑单词</button>
+    <div class="header">
+        <h1>妹宝今天爱我吗</h1>
     </div>
     
-    <div class="timer">时间: 0秒</div>
-    
-    <div class="word-form" id="wordForm">
-        <input type="text" id="chineseInput" placeholder="中文单词">
-        <input type="text" id="englishInput" placeholder="英文翻译">
-        <button id="saveWordBtn">保存</button>
+    <div class="tabs">
+        <div class="tab active" data-tab="game">单词消消乐</div>
+        <div class="tab" data-tab="cat">养猫咪</div>
     </div>
     
-    <div class="word-list" id="wordList"></div>
+    <!-- 游戏标签页 -->
+    <div class="tab-content active" id="game-tab">
+        <div class="game-info">
+            <div class="timer">时间: 0秒</div>
+            <div class="score">积分: <span id="scoreValue">0</span></div>
+            <div class="level">关卡: <span id="levelValue">1</span></div>
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn">开始游戏</button>
+            <button id="addWordBtn">添加单词</button>
+            <button id="editWordsBtn">编辑单词</button>
+        </div>
+        
+        <div class="word-form" id="wordForm">
+            <input type="text" id="chineseInput" placeholder="中文单词">
+            <input type="text" id="englishInput" placeholder="英文翻译">
+            <button id="saveWordBtn">保存</button>
+        </div>
+        
+        <div class="word-list" id="wordList"></div>
+        
+        <div id="gameBoard"></div>
+        
+        <div class="success-message" id="successMessage">
+            关卡完成!
+            <div id="completionTime"></div>
+            <button id="nextLevelBtn">下一关</button>
+        </div>
+    </div>
     
-    <div class="game-container" id="gameContainer"></div>
-    
-    <div class="success-message" id="successMessage">
-        老婆太强了!
-        <div id="completionTime"></div>
+    <!-- 猫咪标签页 -->
+    <div class="tab-content" id="cat-tab">
+        <div class="cat-area">
+            <div class="cat-name" id="catName">小猫咪</div>
+            
+            <div class="cat-controls">
+                <input type="text" id="catNameInput" placeholder="给猫咪起名">
+                <button id="setCatNameBtn">改名</button>
+            </div>
+            
+            <div class="cat-container">
+                <div class="cat-image-container">
+                    <img src="images/animal.png" class="cat-image" id="cat-body" alt="猫咪">
+                    <img src="https://i.imgur.com/7VQZq3E.png" class="cat-outfit" id="cat-hat" style="display: none;" alt="帽子">
+                    <img src="https://i.imgur.com/5XwTQ2L.png" class="cat-outfit" id="cat-scarf" style="display: none;" alt="围巾">
+                    <img src="https://i.imgur.com/9Y7wZ4K.png" class="cat-outfit" id="cat-glasses" style="display: none;" alt="眼镜">
+                    <img src="https://i.imgur.com/3QvW9Xp.png" class="cat-outfit" id="cat-bow" style="display: none;" alt="蝴蝶结">
+                </div>
+                <div class="cat-talk" id="catTalk">喵~</div>
+            </div>
+            
+            <div class="cat-controls">
+                <button id="talkToCatBtn">摸摸头</button>
+                <button id="chatBtn">对话</button>
+            </div>
+            
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="和猫咪说点什么...">
+                    <button id="sendMessageBtn">发送</button>
+                </div>
+            </div>
+            
+            <div class="cat-stats">
+                <div class="stat-bar hunger">
+                    <div class="stat-fill" id="hungerBar" style="width: 50%;"></div>
+                    <div class="stat-label">饱食度: <span id="hungerValue">50</span>/100</div>
+                </div>
+                <div class="stat-bar thirst">
+                    <div class="stat-fill" id="thirstBar" style="width: 50%;"></div>
+                    <div class="stat-label">口渴度: <span id="thirstValue">50</span>/100</div>
+                </div>
+                <div class="stat-bar happiness">
+                    <div class="stat-fill" id="happinessBar" style="width: 50%;"></div>
+                    <div class="stat-label">心情值: <span id="happinessValue">50</span>/100</div>
+                </div>
+            </div>
+            
+            <div class="shop-container">
+                <div class="shop-title">猫咪商店</div>
+                <div class="shop-tabs">
+                    <div class="shop-tab active" data-shop="items">日常用品</div>
+                    <div class="shop-tab" data-shop="outfits">服装配饰</div>
+                </div>
+                
+                <div class="shop-content active" id="itemsShop">
+                    <div class="shop-item" data-type="food" data-cost="10">
+                        <img src="assets/icons/cat-food.png" alt="猫粮">
+                        <div class="shop-item-name">猫粮</div>
+                        <div class="shop-item-price">10积分</div>
+                    </div>
+                    <div class="shop-item" data-type="water" data-cost="5">
+                        <img src="assets/icons/water-bowl.png" alt="水">
+                        <div class="shop-item-name">水</div>
+                        <div class="shop-item-price">5积分</div>
+                    </div>
+                    <div class="shop-item" data-type="toy" data-cost="20">
+                        <img src="assets/icons/cat-toy.png" alt="玩具">
+                        <div class="shop-item-name">玩具</div>
+                        <div class="shop-item-price">20积分</div>
+                    </div>
+                    <div class="shop-item" data-type="medicine" data-cost="30">
+                        <img src="assets/icons/medicine.png" alt="药品">
+                        <div class="shop-item-name">药品</div>
+                        <div class="shop-item-price">30积分</div>
+                    </div>
+                </div>
+                
+                <div class="shop-content" id="outfitsShop">
+                    <div class="shop-item" data-type="hat" data-cost="50">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081839.png" alt="帽子">
+                        <div class="shop-item-name">帽子</div>
+                        <div class="shop-item-price">50积分</div>
+                    </div>
+                    <div class="shop-item" data-type="scarf" data-cost="40">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081848.png" alt="围巾">
+                        <div class="shop-item-name">围巾</div>
+                        <div class="shop-item-price">40积分</div>
+                    </div>
+                    <div class="shop-item" data-type="glasses" data-cost="60">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081832.png" alt="眼镜">
+                        <div class="shop-item-name">眼镜</div>
+                        <div class="shop-item-price">60积分</div>
+                    </div>
+                    <div class="shop-item" data-type="bow" data-cost="30">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081822.png" alt="蝴蝶结">
+                        <div class="shop-item-name">蝴蝶结</div>
+                        <div class="shop-item-price">30积分</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- 音频元素 -->
-    <audio id="bubbleSound" src="bubble.mp3" preload="auto"></audio>
+    <audio id="bubbleSound" src="assets/sounds/bubble_pop.mp3" preload="auto"></audio>
     <audio id="bgMusic" loop>
-        <source src="background.mp3" type="audio/mpeg">
-        您的浏览器不支持音频元素
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-cat-1355.mp3" type="audio/mpeg">
     </audio>
+    <audio id="successSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
+    <audio id="catSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cat-purring-1198.mp3" preload="auto"></audio>
     
     <!-- 音乐控制按钮 -->
-    <div class="music-controls">
-        <button id="playMusicBtn">播放音乐</button>
-        <button id="pauseMusicBtn">暂停音乐</button>
-        <span id="musicStatus">音乐已暂停</span>
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
     </div>
 
     <script>
-        // 默认单词库
+        // 四级单词库 (精选150个高频词汇)
         const defaultWords = [
-            { chinese: "指责;归咎于", english: "accuse" },
-            { chinese: "劝告;建议;通知", english: "advise" },
-            { chinese: "丢弃;放弃，抛弃", english: "abandon" },
-            { chinese: "使习惯", english: "accustom" },
-            { chinese: "飞机", english: "aeroplane" },
-            { chinese: "能力;能耐，本领", english: "ability" },
-            { chinese: "惯常的;习惯的", english: "accustomed" },
-            { chinese: "事情，事件;事务", english: "affair" },
-            { chinese: "不正常的;变态的", english: "abnormal" },
-            { chinese: "完成，实现;达到", english: "achieve" },
-            { chinese: "影响;感动", english: "affect" },
-            { chinese: "慈爱，爱;爱慕", english: "affection" },
-            { chinese: "缺席，不在场;缺乏", english: "absence" },
-            { chinese: "认识;了解;熟人", english: "acquaintance" },
-            { chinese: "非洲的n.非洲人", english: "African" },
-            { chinese: "不在场的;缺乏的", english: "absent" },
-            { chinese: "取得;获得;学到", english: "acquire" },
-            { chinese: "经办;代理;代理处", english: "agency" }
+            { chinese: "放弃", english: "abandon" },
+            { chinese: "能力", english: "ability" },
+            { chinese: "反常的", english: "abnormal" },
+            { chinese: "废除", english: "abolish" },
+            { chinese: "突然的", english: "abrupt" },
+            { chinese: "缺席", english: "absence" },
+            { chinese: "绝对的", english: "absolute" },
+            { chinese: "吸收", english: "absorb" },
+            { chinese: "抽象的", english: "abstract" },
+            { chinese: "荒谬的", english: "absurd" },
+            { chinese: "丰富", english: "abundant" },
+            { chinese: "滥用", english: "abuse" },
+            { chinese: "学术的", english: "academic" },
+            { chinese: "加速", english: "accelerate" },
+            { chinese: "口音", english: "accent" },
+            { chinese: "接受", english: "acceptance" },
+            { chinese: "接近", english: "access" },
+            { chinese: "事故", english: "accident" },
+            { chinese: "住宿", english: "accommodation" },
+            { chinese: "陪伴", english: "accompany" },
+            { chinese: "完成", english: "accomplish" },
+            { chinese: "一致", english: "accordance" },
+            { chinese: "因此", english: "accordingly" },
+            { chinese: "账户", english: "account" },
+            { chinese: "积累", english: "accumulate" },
+            { chinese: "准确", english: "accuracy" },
+            { chinese: "指控", english: "accuse" },
+            { chinese: "习惯", english: "accustomed" },
+            { chinese: "成就", english: "achievement" },
+            { chinese: "酸", english: "acid" },
+            { chinese: "承认", english: "acknowledge" },
+            { chinese: "获得", english: "acquire" },
+            { chinese: "激怒", english: "aggravate" },
+            { chinese: "侵略的", english: "aggressive" },
+            { chinese: "灵活的", english: "flexible" },
+            { chinese: "繁荣", english: "flourish" },
+            { chinese: "波动", english: "fluctuate" },
+            { chinese: "禁止", english: "forbid" },
+            { chinese: "预见", english: "foresee" },
+            { chinese: "正式的", english: "formal" },
+            { chinese: "形成", english: "formation" },
+            { chinese: "公式", english: "formula" },
+            { chinese: "坚固的", english: "fortify" },
+            { chinese: "建立", english: "foundation" },
+            { chinese: "易碎的", english: "fragile" },
+            { chinese: "框架", english: "framework" },
+            { chinese: "坦率的", english: "frank" },
+            { chinese: "摩擦", english: "friction" },
+            { chinese: "边境", english: "frontier" },
+            { chinese: "挫败", english: "frustrate" },
+            { chinese: "基本的", english: "fundamental" },
+            { chinese: "葬礼", english: "funeral" },
+            { chinese: "愤怒的", english: "furious" },
+            { chinese: "炉子", english: "furnace" },
+            { chinese: "供应", english: "furnish" },
+            { chinese: "此外", english: "furthermore" },
+            { chinese: "保险丝", english: "fuse" },
+            { chinese: "徒劳的", english: "futile" },
+            { chinese: "画廊", english: "gallery" },
+            { chinese: "缺口", english: "gap" },
+            { chinese: "凝视", english: "gaze" },
+            { chinese: "概括", english: "generalize" },
+            { chinese: "产生", english: "generate" },
+            { chinese: "慷慨的", english: "generous" },
+            { chinese: "天才", english: "genius" },
+            { chinese: "真正的", english: "genuine" },
+            { chinese: "姿势", english: "gesture" },
+            { chinese: "瞥见", english: "glimpse" },
+            { chinese: "全球的", english: "global" },
+            { chinese: "阴沉", english: "gloomy" },
+            { chinese: "光荣的", english: "glorious" },
+            { chinese: "目标", english: "goal" },
+            { chinese: "优雅的", english: "graceful" },
+            { chinese: "逐渐的", english: "gradual" },
+            { chinese: "毕业", english: "graduation" },
+            { chinese: "谷物", english: "grain" },
+            { chinese: "授予", english: "grant" },
+            { chinese: "感激的", english: "grateful" },
+            { chinese: "感激", english: "gratitude" },
+            { chinese: "重力", english: "gravity" },
+            { chinese: "贪婪的", english: "greedy" },
+            { chinese: "温室", english: "greenhouse" },
+            { chinese: "悲伤", english: "grief" },
+            { chinese: "抱怨", english: "grumble" },
+            { chinese: "保证", english: "guarantee" },
+            { chinese: "指导", english: "guidance" },
+            { chinese: "有罪的", english: "guilty" },
+            { chinese: "栖息地", english: "habitat" },
+            { chinese: "习惯", english: "habitual" },
+            { chinese: "停止", english: "halt" },
+            { chinese: "妨碍", english: "hamper" },
+            { chinese: "处理", english: "handle" },
+            { chinese: "和谐", english: "harmony" },
+            { chinese: "收获", english: "harvest" },
+            { chinese: "匆忙", english: "haste" },
+            { chinese: "危险", english: "hazard" },
+            { chinese: "标题", english: "heading" },
+            { chinese: "总部", english: "headquarters" },
+            { chinese: "治愈", english: "heal" },
+            { chinese: "堆", english: "heap" },
+            { chinese: "听力的", english: "hearing" },
+            { chinese: "犹豫", english: "hesitate" },
+            { chinese: "强调", english: "highlight" },
+            { chinese: "暗示", english: "hint" },
+            { chinese: "历史的", english: "historic" },
+            { chinese: "空心", english: "hollow" },
+            { chinese: "诚实的", english: "honest" },
+            { chinese: "荣誉", english: "honor" },
+            { chinese: "希望", english: "hopeful" },
+            { chinese: "地平线", english: "horizon" },
+            { chinese: "恐怖的", english: "horrible" },
+            { chinese: "敌意", english: "hostility" },
+            { chinese: "谦逊", english: "humility" },
+            { chinese: "假设", english: "hypothesis" },
+            { chinese: "理想的", english: "ideal" },
+            { chinese: "相同的", english: "identical" },
+            { chinese: "识别", english: "identify" },
+            { chinese: "无知", english: "ignorance" },
+            { chinese: "忽视", english: "ignore" },
+            { chinese: "非法的", english: "illegal" },
+            { chinese: "文盲", english: "illiterate" },
+            { chinese: "照亮", english: "illuminate" },
+            { chinese: "幻觉", english: "illusion" },
+            { chinese: "说明", english: "illustrate" },
+            { chinese: "想象", english: "imagine" },
+            { chinese: "模仿", english: "imitate" },
+            { chinese: "立即的", english: "immediate" },
+            { chinese: "巨大的", english: "immense" },
+            { chinese: "移民", english: "immigrant" },
+            { chinese: "免疫的", english: "immune" },
+            { chinese: "影响", english: "impact" },
+            { chinese: "不耐烦", english: "impatient" },
+            { chinese: "实施", english: "implement" },
+            { chinese: "暗示", english: "implication" },
+            { chinese: "进口", english: "import" },
+            { chinese: "强加", english: "impose" },
+            { chinese: "印象", english: "impression" },
+            { chinese: "改进", english: "improvement" },
+            { chinese: "冲动", english: "impulse" },
+            { chinese: "事件", english: "incident" },
+            { chinese: "收入", english: "income" },
+            { chinese: "增加", english: "increase" },
+            { chinese: "独立", english: "independent" },
+            { chinese: "索引", english: "index" },
+            { chinese: "指示", english: "indicate" },
+            { chinese: "个人", english: "individual" },
+            { chinese: "工业", english: "industry" },
+            { chinese: "不可避免", english: "inevitable" },
+            { chinese: "婴儿", english: "infant" },
+            { chinese: "感染", english: "infect" },
+            { chinese: "推断", english: "infer" },
+            { chinese: "影响", english: "influence" },
+            { chinese: "通知", english: "inform" },
+            { chinese: "成分", english: "ingredient" },
+            { chinese: "继承", english: "inherit" },
+            { chinese: "最初的", english: "initial" },
+            { chinese: "主动", english: "initiative" },
+            { chinese: "注射", english: "injection" },
+            { chinese: "伤害", english: "injure" },
+            { chinese: "创新", english: "innovation" },
+            { chinese: "询问", english: "inquiry" },
+            { chinese: "昆虫", english: "insect" },
+            { chinese: "插入", english: "insert" },
+            { chinese: "检查", english: "inspect" },
+            { chinese: "灵感", english: "inspiration" },
+            { chinese: "安装", english: "install" },
+            { chinese: "实例", english: "instance" },
+            { chinese: "立即", english: "instant" },
+            { chinese: "代替", english: "instead" },
+            { chinese: "本能", english: "instinct" },
+            { chinese: "机构", english: "institution" },
+            { chinese: "指示", english: "instruction" },
+            { chinese: "乐器", english: "instrument" },
+            { chinese: "保险", english: "insurance" },
+            { chinese: "智力", english: "intelligence" },
+            { chinese: "强烈的", english: "intense" },
+            { chinese: "意图", english: "intention" },
+            { chinese: "互动", english: "interaction" },
+            { chinese: "兴趣", english: "interest" },
+            { chinese: "干扰", english: "interfere" },
+            { chinese: "内部", english: "interior" },
+            { chinese: "中间的", english: "intermediate" },
+            { chinese: "解释", english: "interpret" },
+            { chinese: "中断", english: "interrupt" },
+            { chinese: "面试", english: "interview" },
+            { chinese: "亲密", english: "intimate" },
+            { chinese: "介绍", english: "introduction" },
+            { chinese: "发明", english: "invention" },
+            { chinese: "投资", english: "invest" },
+            { chinese: "调查", english: "investigate" },
+            { chinese: "涉及", english: "involve" },
+            { chinese: "隔离", english: "isolate" },
+            { chinese: "问题", english: "issue" },
+            { chinese: "项目", english: "item" }
         ];
 
         // 游戏状态变量
@@ -258,16 +1018,129 @@
         let startTime = 0;
         let timerInterval;
         let currentWords = [];
+        let usedWords = [];
+        let score = 0;
+        let level = 1;
+        let musicPlaying = false;
+        
+        // 猫咪状态
+        let cat = {
+            name: "小猫咪",
+            hunger: 50,
+            thirst: 50,
+            happiness: 50,
+            outfits: {
+                hat: false,
+                scarf: false,
+                glasses: false,
+                bow: false
+            },
+            messages: [
+                "喵喵喵~",
+                "主人陪我玩嘛~",
+                "我饿了...",
+                "想喝水水~",
+                "学习好无聊...",
+                "匹配单词真好玩!",
+                "喵呜~",
+                "主人最好了!",
+                "再来一关嘛~",
+                "我是不是很聪明?"
+            ],
+            chatResponses: {
+                "你好": ["你好呀主人!", "喵~你好!", "今天也要好好学习哦!"],
+                "吃饭": ["想吃小鱼干!", "喵~肚子饿了", "主人给我买猫粮嘛"],
+                "学习": ["英语好难喵...", "主人教我单词好不好", "我们一起学习吧"],
+                "可爱": ["喵呜~害羞", "主人最好了!", "谢谢夸奖啦"],
+                "睡觉": ["zzZ...", "晚安喵~", "想和主人一起睡"],
+                "衣服": ["我的新衣服好看吗?", "喵~喜欢这件", "主人眼光真好"],
+                "游戏": ["再来一关!", "好好玩喵~", "主人好厉害"],
+                "名字": ["我叫{name}哦", "喵~我是{name}", "谢谢主人给我起名"],
+                "喜欢": ["最喜欢主人了!", "喵呜~开心", "我也喜欢你"],
+                "讨厌": ["不要这样说嘛", "喵...伤心", "主人不爱我了吗"]
+            }
+        };
 
-        // 鲜艳但不刺眼的颜色数组
-        const bubbleColors = [
-            '#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', 
-            '#B5EAD7', '#C7CEEA', '#F8B195', '#F67280',
-            '#C06C84', '#6C5B7B', '#355C7D', '#A8E6CE',
-            '#DCEDC2', '#FFD3B5', '#FFAAA6', '#FF8C94',
-            '#A2D7D8', '#BEE5BF', '#F5D7E3', '#E3A8B9',
-            '#FFC8A2', '#D4A5A5', '#E2C2FF', '#A2C5FF'
-        ];
+        // DOM元素
+        const gameBoard = document.getElementById('gameBoard');
+        const startBtn = document.getElementById('startBtn');
+        const addWordBtn = document.getElementById('addWordBtn');
+        const editWordsBtn = document.getElementById('editWordsBtn');
+        const saveWordBtn = document.getElementById('saveWordBtn');
+        const wordForm = document.getElementById('wordForm');
+        const chineseInput = document.getElementById('chineseInput');
+        const englishInput = document.getElementById('englishInput');
+        const wordList = document.getElementById('wordList');
+        const timerDisplay = document.querySelector('.timer');
+        const scoreDisplay = document.getElementById('scoreValue');
+        const levelDisplay = document.getElementById('levelValue');
+        const successMessage = document.getElementById('successMessage');
+        const completionTime = document.getElementById('completionTime');
+        const nextLevelBtn = document.getElementById('nextLevelBtn');
+        const bubbleSound = document.getElementById('bubbleSound');
+        const bgMusic = document.getElementById('bgMusic');
+        const successSound = document.getElementById('successSound');
+        const catSound = document.getElementById('catSound');
+        const musicControl = document.getElementById('musicControl');
+        const catNameElement = document.getElementById('catName');
+        const catNameInput = document.getElementById('catNameInput');
+        const setCatNameBtn = document.getElementById('setCatNameBtn');
+        const catTalk = document.getElementById('catTalk');
+        const talkToCatBtn = document.getElementById('talkToCatBtn');
+        const chatBtn = document.getElementById('chatBtn');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const hungerBar = document.getElementById('hungerBar');
+        const thirstBar = document.getElementById('thirstBar');
+        const happinessBar = document.getElementById('happinessBar');
+        const hungerValue = document.getElementById('hungerValue');
+        const thirstValue = document.getElementById('thirstValue');
+        const happinessValue = document.getElementById('happinessValue');
+        const catHat = document.getElementById('cat-hat');
+        const catScarf = document.getElementById('cat-scarf');
+        const catGlasses = document.getElementById('cat-glasses');
+        const catBow = document.getElementById('cat-bow');
+        const itemsShop = document.getElementById('itemsShop');
+        const outfitsShop = document.getElementById('outfitsShop');
+        const shopTabs = document.querySelectorAll('.shop-tab');
+        
+        // 标签切换
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab;
+                
+                // 更新标签状态
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // 更新内容区域
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === `${tabId}-tab`) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // 商店标签切换
+        shopTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const shopId = tab.dataset.shop;
+                
+                shopTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                itemsShop.classList.remove('active');
+                outfitsShop.classList.remove('active');
+                document.getElementById(`${shopId}Shop`).classList.add('active');
+            });
+        });
 
         // 初始化游戏
         function initGame() {
@@ -275,14 +1148,26 @@
             const savedWords = JSON.parse(localStorage.getItem('vocabulary')) || defaultWords;
             currentWords = [...savedWords];
             
-            // 确保单词数量足够
-            if (currentWords.length < 8) {
-                currentWords = [...currentWords, ...defaultWords.slice(0, 8 - currentWords.length)];
+            // 移除已经使用过的单词
+            const availableWords = currentWords.filter(word => 
+                !usedWords.some(used => 
+                    used.chinese === word.chinese && used.english === word.english
+                )
+            );
+            
+            // 如果可用单词不足，重置已用单词列表
+            if (availableWords.length < 8) {
+                usedWords = [];
+                addChatMessage("猫咪", "所有单词已用完，重新开始循环!");
+                currentWords = [...savedWords];
+            } else {
+                currentWords = availableWords;
             }
             
             // 随机选择8对单词
             const shuffled = [...currentWords].sort(() => 0.5 - Math.random());
             const selectedPairs = shuffled.slice(0, 8);
+            usedWords = [...usedWords, ...selectedPairs];
             
             // 创建泡泡
             createBubbles(selectedPairs);
@@ -299,28 +1184,35 @@
             
             // 隐藏成功消息
             successMessage.style.display = 'none';
-
+            
+            // 更新猫咪状态
+            updateCatStats();
+            
             // 尝试播放背景音乐
             playBackgroundMusic();
+            
+            // 猫咪说话
+            addChatMessage("猫咪", "新的一关开始啦!加油哦主人~");
         }
 
         // 尝试播放背景音乐
         function playBackgroundMusic() {
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.volume = 0.3; // 设置音量30%
-            bgMusic.play()
-                .then(() => {
-                    document.getElementById('musicStatus').textContent = "音乐播放中...";
-                })
-                .catch(error => {
-                    console.log("自动播放被阻止:", error);
-                    document.getElementById('musicStatus').textContent = "点击播放按钮启用音乐";
-                });
+            if (musicPlaying) {
+                bgMusic.volume = 0.3;
+                bgMusic.src = 'assets/sounds/bg_music.mp3'; 
+                bgMusic.play()
+                    .then(() => {
+                        musicControl.innerHTML = '<i class="fas fa-music"></i>';
+                    })
+                    .catch(error => {
+                        console.log("自动播放被阻止:", error);
+                    });
+            }
         }
 
         // 创建泡泡
         function createBubbles(wordPairs) {
-            gameContainer.innerHTML = '';
+            gameBoard.innerHTML = '';
             
             // 创建中文和英文泡泡
             const allBubbles = [];
@@ -346,17 +1238,14 @@
             shuffledBubbles.forEach((bubble, index) => {
                 const bubbleElement = document.createElement('div');
                 bubbleElement.className = 'bubble';
+                bubbleElement.classList.add(`bubble-color-${(index % 10) + 1}`);
                 bubbleElement.textContent = bubble.text;
                 bubbleElement.dataset.type = bubble.type;
                 bubbleElement.dataset.match = bubble.match;
                 bubbleElement.dataset.index = index;
                 
-                // 设置随机鲜艳颜色
-                const colorIndex = index % bubbleColors.length;
-                bubbleElement.style.backgroundColor = bubbleColors[colorIndex];
-                
                 bubbleElement.addEventListener('click', () => handleBubbleClick(bubbleElement));
-                gameContainer.appendChild(bubbleElement);
+                gameBoard.appendChild(bubbleElement);
             });
         }
 
@@ -365,7 +1254,6 @@
             if (!gameStarted) return;
             
             // 播放音效
-            const bubbleSound = document.getElementById('bubbleSound');
             bubbleSound.currentTime = 0;
             bubbleSound.play();
             
@@ -403,6 +1291,19 @@
                         selectedBubbles = [];
                         matchedPairs++;
                         
+                        // 增加积分
+                        score += 10;
+                        scoreDisplay.textContent = score;
+                        
+                        // 猫咪心情变好
+                        cat.happiness = Math.min(100, cat.happiness + 5);
+                        updateCatStats();
+                        
+                        // 随机猫咪说话
+                        if (Math.random() > 0.7) {
+                            catSayRandom();
+                        }
+                        
                         // 检查游戏是否结束
                         if (matchedPairs === 8) {
                             endGame();
@@ -414,6 +1315,10 @@
                         bubble1.classList.remove('selected');
                         bubble2.classList.remove('selected');
                         selectedBubbles = [];
+                        
+                        // 猫咪心情变差
+                        cat.happiness = Math.max(0, cat.happiness - 3);
+                        updateCatStats();
                     }, 1000);
                 }
             }
@@ -423,6 +1328,19 @@
         function updateTimer() {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             timerDisplay.textContent = `时间: ${elapsed}秒`;
+            
+            // 随时间减少猫咪状态
+            if (elapsed % 30 === 0) {
+                cat.hunger = Math.max(0, cat.hunger - 5);
+                cat.thirst = Math.max(0, cat.thirst - 5);
+                cat.happiness = Math.max(0, cat.happiness - 2);
+                updateCatStats();
+                
+                if (cat.hunger < 30 || cat.thirst < 30) {
+                    const message = cat.hunger < cat.thirst ? "我饿了..." : "我渴了...";
+                    addChatMessage("猫咪", message);
+                }
+            }
         }
 
         // 结束游戏
@@ -432,8 +1350,271 @@
             
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             completionTime.textContent = `用时: ${elapsed}秒`;
+            
+            // 根据时间奖励额外积分
+            const timeBonus = Math.max(0, 100 - elapsed);
+            score += timeBonus;
+            scoreDisplay.textContent = score;
+            
+            // 播放成功音效
+            successSound.play();
+            
+            // 显示成功消息
             successMessage.style.display = 'block';
+            
+            // 猫咪心情变好
+            cat.happiness = Math.min(100, cat.happiness + 15);
+            updateCatStats();
+            
+            // 猫咪说话
+            addChatMessage("猫咪", "主人好棒!再来一关嘛~");
         }
+
+        // 下一关
+        nextLevelBtn.addEventListener('click', function() {
+            successMessage.style.display = 'none';
+            level++;
+            levelDisplay.textContent = level;
+            initGame();
+        });
+
+        // 更新猫咪状态显示
+        function updateCatStats() {
+            hungerBar.style.width = `${cat.hunger}%`;
+            thirstBar.style.width = `${cat.thirst}%`;
+            happinessBar.style.width = `${cat.happiness}%`;
+            
+            hungerValue.textContent = cat.hunger;
+            thirstValue.textContent = cat.thirst;
+            happinessValue.textContent = cat.happiness;
+            
+            // 根据状态改变猫咪表情
+            const catImage = document.getElementById('cat-body');
+            if (cat.happiness > 70) {
+                catImage.style.transform = "scale(1.05)";
+            } else if (cat.happiness < 30) {
+                catImage.style.transform = "scale(0.95)";
+            } else {
+                catImage.style.transform = "scale(1)";
+            }
+            
+            // 保存状态
+            localStorage.setItem('catStats', JSON.stringify({
+                hunger: cat.hunger,
+                thirst: cat.thirst,
+                happiness: cat.happiness
+            }));
+        }
+
+        // 猫咪随机说话
+        function catSayRandom() {
+            const randomIndex = Math.floor(Math.random() * cat.messages.length);
+            const message = cat.messages[randomIndex];
+            showCatTalk(message);
+            addChatMessage("猫咪", message);
+        }
+
+        // 显示猫咪说话泡泡
+        function showCatTalk(message) {
+            catTalk.textContent = message;
+            catTalk.style.display = 'block';
+            setTimeout(() => {
+                catTalk.style.display = 'none';
+            }, 3000);
+        }
+
+        // 添加聊天消息
+        function addChatMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+            messageElement.classList.add(sender === "猫咪" ? "cat-message" : "user-message");
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // 处理猫咪对话
+        function handleCatChat(message) {
+            message = message.toLowerCase().trim();
+            let response = "";
+            
+            // 检查是否有匹配的关键词
+            for (const [keyword, responses] of Object.entries(cat.chatResponses)) {
+                if (message.includes(keyword.toLowerCase())) {
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    response = randomResponse.replace("{name}", cat.name);
+                    break;
+                }
+            }
+            
+            // 如果没有匹配的关键词，使用默认回复
+            if (!response) {
+                const defaultResponses = [
+                    "喵~听不懂",
+                    "主人说什么呢?",
+                    "我们一起玩吧!",
+                    "喵喵喵~",
+                    "学习好无聊...",
+                    "主人最好了!"
+                ];
+                response = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            }
+            
+            // 显示回复
+            showCatTalk(response);
+            addChatMessage("猫咪", response);
+            
+            // 增加猫咪心情
+            cat.happiness = Math.min(100, cat.happiness + 3);
+            updateCatStats();
+            
+            // 播放猫咪声音
+            catSound.currentTime = 0;
+            catSound.play();
+        }
+
+        // 和猫咪说话
+        talkToCatBtn.addEventListener('click', function() {
+            const responses = [
+                "喵~好舒服",
+                "主人摸摸头好开心!",
+                "喵呜~",
+                "最喜欢主人了!",
+                "再来一次嘛~"
+            ];
+            const response = responses[Math.floor(Math.random() * responses.length)];
+            showCatTalk(response);
+            addChatMessage("猫咪", response);
+            
+            // 增加猫咪心情
+            cat.happiness = Math.min(100, cat.happiness + 5);
+            updateCatStats();
+            
+            // 播放猫咪声音
+            catSound.currentTime = 0;
+            catSound.play();
+        });
+
+        // 打开/关闭聊天
+        chatBtn.addEventListener('click', function() {
+            chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // 发送消息
+        sendMessageBtn.addEventListener('click', function() {
+            const message = chatInput.value.trim();
+            if (message) {
+                addChatMessage("你", message);
+                chatInput.value = '';
+                setTimeout(() => {
+                    handleCatChat(message);
+                }, 500);
+            }
+        });
+
+        // 按Enter发送消息
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessageBtn.click();
+            }
+        });
+
+        // 设置猫咪名字
+        setCatNameBtn.addEventListener('click', function() {
+            const newName = catNameInput.value.trim();
+            if (newName) {
+                cat.name = newName;
+                catNameElement.textContent = newName;
+                catNameInput.value = '';
+                const response = `我是${newName}, 请多指教!`;
+                showCatTalk(response);
+                addChatMessage("猫咪", response);
+                
+                // 保存到localStorage
+                localStorage.setItem('catName', newName);
+            }
+        });
+
+        // 猫咪商店购买
+        document.querySelectorAll('.shop-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const type = this.dataset.type;
+                const cost = parseInt(this.dataset.cost);
+                
+                if (score >= cost) {
+                    score -= cost;
+                    scoreDisplay.textContent = score;
+                    
+                    let response = "";
+                    
+                    switch(type) {
+                        case 'food':
+                            cat.hunger = Math.min(100, cat.hunger + 20);
+                            response = "好吃!谢谢主人~";
+                            break;
+                        case 'water':
+                            cat.thirst = Math.min(100, cat.thirst + 20);
+                            response = "咕噜咕噜...好喝!";
+                            break;
+                        case 'toy':
+                            cat.happiness = Math.min(100, cat.happiness + 30);
+                            response = "好玩!我最喜欢玩具了!";
+                            break;
+                        case 'medicine':
+                            cat.hunger = Math.min(100, cat.hunger + 10);
+                            cat.thirst = Math.min(100, cat.thirst + 10);
+                            cat.happiness = Math.min(100, cat.happiness + 10);
+                            response = "喵...药药好苦...";
+                            break;
+                        case 'hat':
+                        case 'scarf':
+                        case 'glasses':
+                        case 'bow':
+                            cat.outfits[type] = !cat.outfits[type];
+                            document.getElementById(`cat-${type}`).style.display = cat.outfits[type] ? 'block' : 'none';
+                            response = cat.outfits[type] ? "喵~好看吗?" : "好吧，我脱掉了...";
+                            // 增加猫咪心情
+                            cat.happiness = Math.min(100, cat.happiness + 10);
+                            break;
+                    }
+                    
+                    showCatTalk(response);
+                    addChatMessage("猫咪", response);
+                    updateCatStats();
+                    bubbleSound.play();
+                    
+                    // 保存分数和服装状态
+                    localStorage.setItem('gameScore', score);
+                    localStorage.setItem('catOutfits', JSON.stringify(cat.outfits));
+                } else {
+                    const response = "积分不够啦...再多学点单词嘛~";
+                    showCatTalk(response);
+                    addChatMessage("猫咪", response);
+                }
+            });
+        });
+
+        // 音乐控制
+        musicControl.addEventListener('click', function() {
+            musicPlaying = !musicPlaying;
+            
+            if (musicPlaying) {
+                bgMusic.volume = 0.3;
+                bgMusic.play()
+                    .then(() => {
+                        musicControl.innerHTML = '<i class="fas fa-music"></i>';
+                        localStorage.setItem('musicPlaying', 'true');
+                    })
+                    .catch(error => {
+                        console.log("音乐播放被阻止:", error);
+                        musicPlaying = false;
+                    });
+            } else {
+                bgMusic.pause();
+                musicControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                localStorage.setItem('musicPlaying', 'false');
+            }
+        });
 
         // 保存单词到localStorage
         function saveWord() {
@@ -441,7 +1622,7 @@
             const english = englishInput.value.trim();
             
             if (!chinese || !english) {
-                alert('请输入中文和英文单词');
+                showCatTalk("请输入中文和英文单词");
                 return;
             }
             
@@ -451,23 +1632,19 @@
             // 添加新单词
             savedWords.push({ chinese, english });
             
-            // 只保留最新的5个单词
-            const trimmedWords = savedWords.slice(-5);
-            
             // 保存回localStorage
-            localStorage.setItem('vocabulary', JSON.stringify(trimmedWords));
+            localStorage.setItem('vocabulary', JSON.stringify(savedWords));
             
             // 清空输入框
             chineseInput.value = '';
             englishInput.value = '';
             
-            // 如果已经有5个单词，隐藏表单
-            if (trimmedWords.length >= 5) {
-                wordForm.classList.add('hidden');
-            }
-            
             // 更新单词列表显示
             displayWordList();
+            
+            // 猫咪反馈
+            showCatTalk("单词保存成功!");
+            addChatMessage("猫咪", "单词保存成功!");
         }
 
         // 显示单词列表
@@ -508,10 +1685,9 @@
             localStorage.setItem('vocabulary', JSON.stringify(savedWords));
             displayWordList();
             
-            // 如果单词少于5个，显示表单
-            if (savedWords.length < 5) {
-                wordForm.classList.remove('hidden');
-            }
+            // 猫咪反馈
+            showCatTalk("单词删除成功!");
+            addChatMessage("猫咪", "单词删除成功!");
         }
 
         // 事件监听器
@@ -526,30 +1702,67 @@
             wordForm.classList.add('hidden');
         });
 
-        // 音乐控制
-        document.getElementById('playMusicBtn').addEventListener('click', function() {
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.volume = 0.3; // 设置音量30%
-            bgMusic.play()
-                .then(() => {
-                    document.getElementById('musicStatus').textContent = "音乐播放中...";
-                })
-                .catch(error => {
-                    console.log("音乐播放被阻止:", error);
-                    document.getElementById('musicStatus').textContent = "请点击播放按钮启用音乐";
-                });
-        });
-
-        document.getElementById('pauseMusicBtn').addEventListener('click', function() {
-            document.getElementById('bgMusic').pause();
-            document.getElementById('musicStatus').textContent = "音乐已暂停";
-        });
-
-        // 初始化显示
-        const savedWords = JSON.parse(localStorage.getItem('vocabulary')) || [];
-        if (savedWords.length >= 5) {
-            wordForm.classList.add('hidden');
+        // 初始化加载
+        function initLoad() {
+            // 加载单词
+            const savedWords = JSON.parse(localStorage.getItem('vocabulary'));
+            if (savedWords && savedWords.length > 0) {
+                wordForm.classList.add('hidden');
+            }
+            
+            // 加载猫咪名字
+            const savedCatName = localStorage.getItem('catName');
+            if (savedCatName) {
+                cat.name = savedCatName;
+                catNameElement.textContent = savedCatName;
+            }
+            
+            // 加载分数
+            const savedScore = localStorage.getItem('gameScore');
+            if (savedScore) {
+                score = parseInt(savedScore);
+                scoreDisplay.textContent = score;
+            }
+            
+            // 加载服装状态
+            const savedOutfits = localStorage.getItem('catOutfits');
+            if (savedOutfits) {
+                cat.outfits = JSON.parse(savedOutfits);
+                catHat.style.display = cat.outfits.hat ? 'block' : 'none';
+                catScarf.style.display = cat.outfits.scarf ? 'block' : 'none';
+                catGlasses.style.display = cat.outfits.glasses ? 'block' : 'none';
+                catBow.style.display = cat.outfits.bow ? 'block' : 'none';
+            }
+            
+            // 加载猫咪状态
+            const savedCatStats = localStorage.getItem('catStats');
+            if (savedCatStats) {
+                const stats = JSON.parse(savedCatStats);
+                cat.hunger = stats.hunger;
+                cat.thirst = stats.thirst;
+                cat.happiness = stats.happiness;
+            }
+            
+            // 加载音乐状态
+            const savedMusicState = localStorage.getItem('musicPlaying');
+            if (savedMusicState === 'true') {
+                musicPlaying = true;
+                playBackgroundMusic();
+            } else {
+                musicControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+            
+            // 初始化猫咪
+            updateCatStats();
+            
+            // 欢迎消息
+            setTimeout(() => {
+                addChatMessage("猫咪", `你好呀主人!我是${cat.name},一起来学习吧~`);
+            }, 1000);
         }
+
+        // 初始化
+        initLoad();
     </script>
 </body>
 </html>
